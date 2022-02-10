@@ -36,6 +36,7 @@ app.MapGet("/AddPerson", async (PersonRequest person, MinimalApiContext db) =>
         };
 
         await db.People.AddAsync(entity);
+        await db.SaveChangesAsync();
         return Results.Ok(entity);
     }
     catch (global::System.Exception)
