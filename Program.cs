@@ -24,4 +24,24 @@ app.MapGet("/beerInject", async (MinimalApiContext db) =>
 
 app.MapGet("/InjectExample", (InjectExample ie) => ie.ShowUtcNow());
 
+app.MapGet("/AddPerson", async (PersonRequest person, MinimalApiContext db) => 
+{
+    try
+    {
+        Person entity = new()
+        {
+            Name = person.Name,
+            Age = person.Age,
+            JobPosition = person.JobPosition
+        };
+
+        await db.People.AddAsync(entity);
+        return Results.Ok(entity);
+    }
+    catch (global::System.Exception)
+    {
+        return Results.BadRequest();
+    }
+});
+
 app.Run();
