@@ -31,7 +31,7 @@ namespace Minimal_Swagger_EF.Models
         {
             modelBuilder.Entity<Person>(entity =>
             {
-                entity.HasNoKey();
+                //entity.HasNoKey();
 
                 entity.ToTable("Person");
 

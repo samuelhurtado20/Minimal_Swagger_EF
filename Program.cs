@@ -4,10 +4,14 @@ using Minimal_Swagger_EF.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<MinimalApiContext>();
 builder.Services.AddTransient<InjectExample>();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapGet("/", () => "Hello World!");
 
