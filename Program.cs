@@ -22,9 +22,9 @@ app.MapGet("/beerInject", async (MinimalApiContext db) =>
     return await db.People.ToListAsync();
 });
 
-app.MapGet("/InjectExample", (InjectExample ie) => ie.ShowUtcNow());
+app.MapGet("/ShowUtcNow", (InjectExample ie) => ie.ShowUtcNow());
 
-app.MapGet("/AddPerson", async (PersonRequest person, MinimalApiContext db) => 
+app.MapPost("/AddPerson", async (PersonRequest person, MinimalApiContext db) => 
 {
     try
     {
@@ -38,6 +38,19 @@ app.MapGet("/AddPerson", async (PersonRequest person, MinimalApiContext db) =>
         await db.People.AddAsync(entity);
         await db.SaveChangesAsync();
         return Results.Ok(entity);
+    }
+    catch (global::System.Exception)
+    {
+        return Results.BadRequest();
+    }
+});
+
+app.MapGet("/GetPerson/{id}", async (int id, MinimalApiContext db) =>
+{
+    try
+    {
+        var entity = await db.People.FindAsync(id);
+        return entity != null ? Results.Ok(entity) : Results.NotFound();
     }
     catch (global::System.Exception)
     {
